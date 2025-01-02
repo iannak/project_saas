@@ -1,23 +1,26 @@
-# Base image para Node.js (versão 18)
-FROM node:18
+# Usar uma imagem base do Alpine
+FROM alpine:3.12
 
-# Diretório de trabalho
+# Instalar Node.js e npm
+RUN apk add --no-cache nodejs npm
+
+# Definir o diretório de trabalho
 WORKDIR /app
 
 # Copiar arquivos de dependências
 COPY package.json package-lock.json ./
 
-# Instalar dependências
+# Instalar as dependências
 RUN npm install
 
-# Copiar todo o código da aplicação para o container
+# Copiar o restante do código
 COPY . .
 
-# Build da aplicação (sem o flag --prod)
+# Rodar o build da aplicação
 RUN npm run build
 
-# Expor a porta 3000 usada pelo NestJS
+# Expor a porta para a aplicação
 EXPOSE 3000
 
-# Comando para rodar o servidor em modo de desenvolvimento
+# Comando para iniciar o servidor
 CMD ["npm", "run", "start"]
