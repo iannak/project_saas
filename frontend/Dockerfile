@@ -13,8 +13,8 @@ RUN npm install
 # Copiar todo o código da aplicação para o container
 COPY . .
 
-# Build da aplicação Angular
-RUN npm run build --prod
+# Build da aplicação Angular (sem o flag --prod para permitir um build de desenvolvimento)
+RUN npm run build
 
 # Servir o conteúdo estático com Nginx
 FROM nginx:alpine
